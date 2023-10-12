@@ -1,13 +1,10 @@
-import { Character } from "./components/Character";
-import { useCharacters } from "./hooks/useCharacters";
+import CharactersGrid from "./components/CharactersGrid";
 
 export function App() {
-  const chars = useCharacters();
-
   return (
-    <>
+    <main>
       <h1 className="text-3xl font-bold underline">Rikimortis</h1>
-      {chars && chars.map((char) => <Character char={char} key={char.id} />)}
-    </>
+      <CharactersGrid />
+    </main>
   );
 }
