@@ -4,6 +4,6 @@
 
 @layer components {
   .wrapper {
-    @apply mx-auto grid w-[90%] max-w-screen-xl;
+    @apply mx-auto w-[90%] max-w-screen-xl;
   }
 }
