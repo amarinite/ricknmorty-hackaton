@@ -1,54 +1,49 @@
+import CharacterSearcher from "./components/CharacterSearcher";
 import CharactersGrid from "./components/CharactersGrid";
+import Footer from "./components/Footer";
+import Logo from "./components/Logo";
 
-function Logo() {
-  return (
-    <header className="flex items-center justify-center gap-6 bg-gray-100 py-6">
-      <h1 className="text-6xl font-black text-gray-900">
-        Rikimorti Characters
-      </h1>
-      <img
-        className="max-w-[14rem]"
-        src="./rikimorti.png"
-        alt="Silhouette in black and white of Rick and Morty"
-      />
-    </header>
-  );
-}
+import { useEffect, useState } from "react";
+import { useCharacters } from "./hooks/useCharacters";
 
-function CharacterSearcher() {
-  return (
-    <section className="flex justify-center bg-gray-100 pb-10">
-      <form className="flex gap-4">
-        <input
-          className="w-[32rem] rounded-lg border border-gray-300 px-4"
-          name="searcher"
-        />
-        <button className="rounded-lg bg-gray-700 p-2 text-white shadow-sm">
-          Find your character
-        </button>
-      </form>
-    </section>
-  );
-}
+const CHARACTERS_ENDPOINT_ALL = "https://rickandmortyapi.com/api/character";
 
 export function App() {
+  const [query, setQuery] = useState("");
+  const [chars, setChars] = useState([]);
+
+  let filteredChars = [];
+
+  useEffect(() => {
+    fetch(CHARACTERS_ENDPOINT_ALL)
+      .then((res) => res.json())
+      .then((data) => setChars(data.results));
+  }, []);
+
+  if (chars && query) {
+    filteredChars = chars.filter((char) =>
+      char.name.toLowerCase().includes(query.toLowerCase()),
+    );
+    console.log(filteredChars);
+  }
+
   return (
     <>
       <Logo />
-      <main className="bg-gray-800 text-gray-700">
-        <CharacterSearcher />
-        <CharactersGrid />
-      </main>
-      <footer className="my-12 flex w-full flex-col items-center text-center">
-        <div className="max-w-md text-gray-500">
-          <p>
-            This project was created for Jump2Digital's 2023 hackaton. Check the
-            source code here:
-          </p>
-          <p>GH</p>
-          <p>Developed by Alba Mar</p>
+      <main className="min-h-[80vh] bg-gray-800 text-gray-700">
+        <CharacterSearcher query={query} onQuery={setQuery} />
+        {filteredChars.length === 0 && query ? (
+          <p className="mt-8 text-center text-white">No results found</p>
+        ) : (
+          <CharactersGrid chars={query ? filteredChars : chars} />
+        )}
+        <div className="flex justify-center pb-8">
+          <button className="rounded-lg bg-gray-300 px-4 py-3 text-lg font-semibold text-gray-800 shadow-md hover:bg-gray-200">
+            Load more
+          </button>
         </div>
-      </footer>
+      </main>
+      <Footer />
     </>
   );
 }

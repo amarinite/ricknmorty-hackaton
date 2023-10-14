@@ -1,5 +1,4 @@
 export default function Character({ char }) {
-  console.log("hey");
   return (
     <article className="flex overflow-hidden rounded-lg bg-gray-900 text-white shadow-lg ">
       <img
@@ -7,7 +6,7 @@ export default function Character({ char }) {
         src={char.image}
         alt={char.name + " portrait"}
       />
-      <div className="ml-7">
+      <div className="ml-7 mt-5">
         <p className="text-2xl font-semibold">{char.name}</p>
         <p>
           {char.status === "Alive"
