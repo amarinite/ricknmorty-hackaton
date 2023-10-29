@@ -11,6 +11,7 @@ const CHARACTERS_ENDPOINT_ALL = "https://rickandmortyapi.com/api/character";
 export function App() {
   const [query, setQuery] = useState("");
   const [chars, setChars] = useState([]);
+  const [page, setPage] = useState(1);
 
   let filteredChars = [];
 
@@ -27,20 +28,24 @@ export function App() {
     console.log(filteredChars);
   }
 
+  const noResults = filteredChars.length === 0 && query;
+
   return (
     <>
       <Logo />
       <main className="min-h-[80vh] bg-gray-800 text-gray-700">
         <CharacterSearcher query={query} onQuery={setQuery} />
-        {filteredChars.length === 0 && query ? (
+        {noResults ? (
           <p className="mt-8 text-center text-white">No results found</p>
         ) : (
           <CharactersGrid chars={query ? filteredChars : chars} />
         )}
         <div className="flex justify-center pb-8">
-          <button className="rounded-lg bg-gray-300 px-4 py-3 text-lg font-semibold text-gray-800 shadow-md hover:bg-gray-200">
-            Load more
-          </button>
+          {!noResults && (
+            <button className="rounded-lg bg-gray-300 px-4 py-3 text-lg font-semibold text-gray-800 shadow-md hover:bg-gray-200">
+              Load more
+            </button>
+          )}
         </div>
       </main>
       <Footer />

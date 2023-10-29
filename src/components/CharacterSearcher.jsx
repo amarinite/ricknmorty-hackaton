@@ -2,7 +2,7 @@ import { FaSearch } from "react-icons/fa";
 
 export default function CharacterSearcher({ query, onQuery }) {
   function handleChange(e) {
-    onQuery(e.target.value);
+    onQuery(e.target.value.trim());
   }
 
   return (
