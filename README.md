@@ -8,7 +8,7 @@ Built for Jump2Digital's 2023 hackaton.
 
 ## Live Demo
 
-You can check a demo of the project [on this link](https://amarinite.github.io/ricknmorty-hackaton/).
+You can check a demo of the project [on this link](https://ricknmorty-hackaton.netlify.app/).
 
 ## Project Setup
 
