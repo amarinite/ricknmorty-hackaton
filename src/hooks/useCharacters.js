@@ -2,14 +2,18 @@ import { useEffect, useState } from "react";
 
 const CHARACTERS_ENDPOINT_ALL = "https://rickandmortyapi.com/api/character";
 
-export function useCharacters() {
-  const [chars, setChars] = useState();
+export function useCharacters(page) {
+  const [chars, setChars] = useState([]);
 
   useEffect(() => {
-    fetch(CHARACTERS_ENDPOINT_ALL)
+    fetch(
+      page
+        ? `${CHARACTERS_ENDPOINT_ALL}/?page=${page}`
+        : CHARACTERS_ENDPOINT_ALL,
+    )
       .then((res) => res.json())
-      .then((data) => setChars(data.results));
-  }, []);
+      .then((data) => setChars((oldArray) => [...oldArray, ...data.results]));
+  }, [page]);
 
   return chars;
 }
